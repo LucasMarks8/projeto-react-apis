@@ -4,15 +4,48 @@ import { GlobalContext } from "./GlobalContext";
 export const GlobalState = (props) => {
   const [pokemons, setPokemons] = useState([]);
   const [pokedex, setPokedex] = useState([]);
-  const [details, setDetails] = useState()
+  const [pokeData, setPokeData] = useState([])
+
+  // const addToPokedex = (pokemon, index) => {
+  //   const addPokemon = [...pokedex.sort((a, b) => {
+  //     return a.id - b.id
+  // })]
+  //   const newPokemon = addPokemon.find((item)=>item.id === pokemon.id)
+  //   if (!newPokemon){
+  //     const pokemonAdd = {...pokemon}
+  //     addPokemon.push(pokemonAdd)
+  //   }
+  //   setPokedex(addPokemon)
+  //   pokemons.splice(index, 1)
+  //   localStorage.setItem("pokeList", JSON.stringify(pokemons));
+  //   localStorage.setItem('pokedex',JSON.stringify(addPokemon))
+  // };
+
+  // const removeToPokedex = (pokemon) => {
+  //   const filterDelete = pokedex.filter((poke)=>poke.id !== pokemon.id)
+  //   pokemons.push(pokemon)
+  //   localStorage.setItem("pokeList", JSON.stringify(pokemons));
+  //   localStorage.setItem('pokedex',JSON.stringify(filterDelete))
+  //   setPokedex(filterDelete)
+  // }
 
   const addToPokedex = (pokemon, index) => {
     const addPokemon = [...pokedex, pokemon];
     setPokedex(addPokemon);
     console.log(addPokemon);
     pokemons.splice(index, 1);
-    localStorage.setItem("pokeList", JSON.stringify(pokemons));
+    // localStorage.setItem("pokeList", JSON.stringify(pokemons));
+    localStorage.setItem("poke", JSON.stringify(pokemons));
     localStorage.setItem("pokedex", JSON.stringify(addPokemon));
+  };
+
+  const removeToPokedex = (pokemon, index) => {
+    const removePokemon = [...pokemons, pokemon];
+    setPokemons(removePokemon);
+    pokedex.splice(index, 1);
+    pokemons.push(pokemon);
+    localStorage.setItem("poke", JSON.stringify(pokemons));
+    localStorage.setItem("pokedex", JSON.stringify(pokedex));
   };
 
   //   const onClickRemove = (pokemon, id) => {
@@ -41,14 +74,7 @@ export const GlobalState = (props) => {
 //     });
 //   };
 
-    const removeToPokedex = (pokemon, index) => {
-      const removePokemon = [...pokemons, pokemon];
-      setPokemons(removePokemon);
-      pokedex.splice(index, 1);
-      pokemons.push(pokemon);
-      localStorage.setItem("pokeList", JSON.stringify(pokemons));
-      localStorage.setItem("pokedex", JSON.stringify(pokedex));
-    };
+  
 
   const context = {
     pokemons,
@@ -57,8 +83,8 @@ export const GlobalState = (props) => {
     setPokedex,
     addToPokedex,
     removeToPokedex,
-    details, 
-    setDetails
+    pokeData, 
+    setPokeData
   };
 
   return (

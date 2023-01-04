@@ -2,27 +2,18 @@ import styled from "styled-components";
 
 export const DetailsContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-`;
+    flex-direction: column;
+    width: 100%;
+    min-height: 110vh;
+    align-items: center;
+    background-color: #5d5d5d;
 
-export const Details = styled.div`
-  row-gap: 3.5rem;
-  min-height: 100%;
-  width: 100%;
-  background-color: #5d5d5d;
-  display: flex;
-  justify-content: center;
-  border: 2px solid black;
-
-  .detailsWord {
+    .detailsWord {
     position: absolute;
     width: 220px;
     height: 72px;
     left: 80px;
-    top: 160px;
+    top: 180px;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 350;
@@ -32,12 +23,32 @@ export const Details = styled.div`
   }
 `;
 
+// export const Details = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100%;
+//   align-items: center;
+//   background-color: blue;
+
+//   /* row-gap: 3.5rem;
+ 
+//   width: 100%;
+//   background-color: #5d5d5d;
+//   display: flex;
+//   justify-content: center;
+//   border: 4px solid black; */
+
+ 
+// `;
+
 export const DivDetails = styled.div`
   position: absolute;
   width: 1389.14px;
   height: 663px;
   border-radius: 37.8857px;
   margin-top: 6rem;
+  
 `;
 
 export const ImageFront = styled.div`

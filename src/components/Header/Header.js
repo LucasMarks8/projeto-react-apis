@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { goToPokedex, gotToHomePage } from "../../routes/coordinator";
-import HeaderContainer, {
+import {
+  HeaderContainer,
   DivButtonLeft,
   DivButtonRight,
   DivHeader,
@@ -9,38 +10,59 @@ import HeaderContainer, {
 import Titulo from "../../assets/images/titulo.png";
 import { Button, ChakraProvider } from "@chakra-ui/react";
 import Seta from "../../assets/icons/seta.svg";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../contexts/GlobalContext";
 
 const Header = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { pokemons, setPokemons, pokedex, setPokedex, details, setDetails } =
+  const { pokemons, setPokemons, pokedex, setPokedex, pokeData } =
     useContext(GlobalContext);
   console.log(pokedex);
-  console.log(details);
+  console.log(pokeData);
+  // const poke = JSON.parse(localStorage.getItem("poke"));
+  const [a, setA] = useState([])
 
-  const findPokemon = () => {
+  useEffect(() => {
+    //  const poke = JSON.parse(localStorage.getItem("poke"));
+    //  if(poke) {
+    //   setA(poke)
+    //  }
+  
+  }, []);
+  console.log(a);
+
+  // const newPokemon = poke && poke.find((item)=>item.id === pokeData && pokeData[0].id)
+  // console.log(newPokemon);
+
+  const findPoke = pokedex && pokedex.find((pokemon) => pokemon.id === pokeData[0].id);
+
+  const removerPokemon = () => {
     pokedex.filter((pokemon, index) => {
-      if (pokemon.id === details.id) {
+      if (pokemon.id === pokeData[0].id) {
         const removePokemon = [...pokemons, pokemon];
         setPokemons(removePokemon);
         pokedex.splice(index, 1);
         pokemons.push(pokemon);
-        localStorage.setItem("pokeList", JSON.stringify(pokemons));
+        localStorage.setItem("poke", JSON.stringify(pokemons));
         localStorage.setItem("pokedex", JSON.stringify(pokedex));
-      } else {
+      } 
+    });
+  };
+  
+  const adicionarPokemon = () => {
+    pokemons.filter((pokemon, index) => {
+      if (pokemon.id === pokeData[0].id) {
         const addPokemon = [...pokedex, pokemon];
         setPokedex(addPokemon);
         console.log(addPokemon);
         pokemons.splice(index, 1);
-        localStorage.setItem("pokeList", JSON.stringify(pokemons));
-        localStorage.setItem("pokedex", JSON.stringify(addPokemon));
-      }
+        pokedex.push(pokemon)
+        localStorage.setItem("poke", JSON.stringify(pokemons));
+        localStorage.setItem("pokedex", JSON.stringify(pokedex));
+      } 
     });
   };
-
-  console.log(findPokemon);
 
   return (
     <ChakraProvider>
@@ -84,13 +106,13 @@ const Header = (props) => {
               <img src={Titulo} alt="Título" />
             </DivTitle>
             <DivButtonRight>
-              {findPokemon ? (
+              {findPoke ? (
                 <Button
                   w={"200px"}
                   h={"50px"}
                   position={"absolute"}
                   colorScheme="red"
-                  onClick={() => findPokemon()}
+                  onClick={() => removerPokemon()}
                 >
                   Excluir da Pokedéx
                 </Button>
@@ -100,7 +122,7 @@ const Header = (props) => {
                   h={"50px"}
                   position={"absolute"}
                   colorScheme="blue"
-                  onClick={() => findPokemon()}
+                  onClick={() => adicionarPokemon()}
                 >
                   Adicionar a Pokedéx
                 </Button>
