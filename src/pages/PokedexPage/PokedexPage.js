@@ -13,8 +13,8 @@ import { backgroundCard, typeIcons } from "../../constants/constants";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import { goToDetailsPage } from "../../routes/coordinator";
 import PokeBall from "../../assets/images/pokebola.png";
-import { Flex } from "@chakra-ui/react";
-import PokedexContainer from "./PokedexPage.Styled";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { PokedexContainer } from "./PokedexPage.Styled";
 
 const PokedexPage = () => {
   const navigate = useNavigate();
@@ -97,13 +97,15 @@ const PokedexPage = () => {
     );
   });
   return (
-    <PokedexContainer>
+    <ChakraProvider>
       <Header />
+      <PokedexContainer>
       <CardContainer>
         <p className="detailsWord">Meus pokemons</p>
         <div className="card">{pokedexList}</div>
       </CardContainer>
     </PokedexContainer>
+    </ChakraProvider>
   );
 };
 

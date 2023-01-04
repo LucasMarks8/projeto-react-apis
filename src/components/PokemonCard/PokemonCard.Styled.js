@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border: 4px solid black;
   background-color: #5d5d5d;
   width: 100%;
   min-height: 100%;
@@ -13,13 +12,10 @@ export const CardContainer = styled.div`
     display: grid;
     grid-template-rows: repeat(7, 1fr);
     grid-template-columns: repeat(3, 1fr);
-    /* display: flex;
-    flex-wrap: wrap; */
     row-gap: -10px;
     background-color: #5d5d5d;
     justify-content: space-around;
     justify-items: center;
-    border: 1px solid red;
     min-height: auto;
   }
 
@@ -28,7 +24,7 @@ export const CardContainer = styled.div`
     width: 400px;
     height: 72px;
     left: 40px;
-    top: 160px;
+    top: 180px;
     font-family: "Poppins";
     font-style: normal;
     font-weight: 350;
@@ -43,7 +39,6 @@ export const DivCard = styled.div`
   width: 28.5vw;
   height: 29vh;
   border-radius: 2rem;
-  border: 1px solid red;
   margin-top: 6rem;
 `;
 

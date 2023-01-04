@@ -16,11 +16,10 @@ import {
   ImageRightSide,
   DivDetails,
   DetailsContainer,
-  Details,
 } from "./DetailsPage.Styled";
 
 const DetailsPage = () => {
-  const { pokemons, setPokemons } = useContext(GlobalContext);
+  const { pokeData, setPokeData } = useContext(GlobalContext);
   const params = useParams();
 
   useEffect(() => {
@@ -28,20 +27,20 @@ const DetailsPage = () => {
   }, []);
 
   const fetchDetails = () => {
-    const pokemonsDetails = [];
-
+    const poke = []
     axios
       .get(`${BASE_URL}/pokemon/${params.name}`)
       .then((response) => {
-        pokemonsDetails.push(response.data);
-        setPokemons(pokemonsDetails);
+        poke.push(response.data)
+        setPokeData(poke);
+        console.log(pokeData);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
 
-  const images = pokemons.map((pokemon, index) => {
+  const images = pokeData.map((pokemon, index) => {
     return (
       <>
         <ImageFront key={index}>
@@ -60,7 +59,7 @@ const DetailsPage = () => {
     );
   });
 
-  const baseStates = pokemons.map((pokemon, index) => {
+  const baseStates = pokeData.map((pokemon, index) => {
     return (
       <ChakraProvider>
         <StatsContainer key={index}>
@@ -90,7 +89,7 @@ const DetailsPage = () => {
     );
   });
 
-  const moves = pokemons.map((pokemon, index) => {
+  const moves = pokeData.map((pokemon, index) => {
     return (
       <MovesContainer key={index}>
         <h1>Moves</h1>
@@ -103,7 +102,7 @@ const DetailsPage = () => {
   });
   console.log(moves);
 
-  const card = pokemons.map((pokemon, index) => {
+  const card = pokeData.map((pokemon, index) => {
     const getTypes = (pokemon) => {
       if (pokemon.types[1]) {
         return (
@@ -130,7 +129,7 @@ const DetailsPage = () => {
     );
   });
 
-  const backgroundColor = pokemons.map((pokemon) => {
+  const backgroundColor = pokeData.map((pokemon) => {
     return (
       <Flex
         display={"flex"}
@@ -147,9 +146,9 @@ const DetailsPage = () => {
   });
 
   return (
+    <ChakraProvider>
+    <Header />
     <DetailsContainer>
-      <Header />
-      <Details>
         <p className="detailsWord">Detalhes</p>
         <div className="card"></div>
         <DivDetails>
@@ -161,8 +160,8 @@ const DetailsPage = () => {
             <div>{moves}</div>
           </div>
         </DivDetails>
-      </Details>
     </DetailsContainer>
+    </ChakraProvider>
   );
 };
 
