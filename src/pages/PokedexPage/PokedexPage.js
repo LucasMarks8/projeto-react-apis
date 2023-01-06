@@ -18,21 +18,15 @@ import { PokedexContainer } from "./PokedexPage.Styled";
 
 const PokedexPage = () => {
   const navigate = useNavigate();
-  const { removeToPokedex, setPokedex, pokedex, onClickRemove } =
+  const { removeToPokedex, setPokedex, pokedex, setPokeData } =
     useContext(GlobalContext);
 
   useEffect(() => {
-    if (localStorage.getItem("pokedex")) {
-      setPokedex(JSON.parse(localStorage.getItem("pokedex")));
+    const storagePokedex = JSON.parse(localStorage.getItem("pokedex"));
+    if (storagePokedex !== null) {
+      setPokedex(storagePokedex);
     }
   }, [setPokedex]);
-
-  // const removeSameID = (pokeId) => {
-  //   const removeId = pokedex.findIndex((i) => i.id === pokeId.id);
-  //   console.log(removeId);
-  //   const newPoke = [...pokedex];
-  //   setPokedex(newPoke);
-  // };
 
   const pokedexList = pokedex.map((pokemon, index) => {
     const getTypes = (pokemon) => {
@@ -71,7 +65,10 @@ const PokedexPage = () => {
             <p>{getTypes(pokemon)}</p>
             <p
               className="details"
-              onClick={() => goToDetailsPage(navigate, pokemon.name)}
+              onClick={() => {
+                setPokeData(pokemon);
+                goToDetailsPage(navigate, pokemon.name);
+              }}
             >
               Detalhes
             </p>
@@ -100,11 +97,11 @@ const PokedexPage = () => {
     <ChakraProvider>
       <Header />
       <PokedexContainer>
-      <CardContainer>
-        <p className="detailsWord">Meus pokemons</p>
-        <div className="card">{pokedexList}</div>
-      </CardContainer>
-    </PokedexContainer>
+        <CardContainer>
+          <p className="detailsWord">Meus pokemons</p>
+          <div className="card">{pokedexList}</div>
+        </CardContainer>
+      </PokedexContainer>
     </ChakraProvider>
   );
 };

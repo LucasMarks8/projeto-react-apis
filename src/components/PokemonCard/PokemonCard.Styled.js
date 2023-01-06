@@ -6,7 +6,6 @@ export const CardContainer = styled.div`
   background-color: #5d5d5d;
   width: 100%;
   min-height: 100%;
- 
 
   .card {
     display: grid;
@@ -155,7 +154,7 @@ export const DivButton = styled.div`
     flex-grow: 0;
     color: #0f0f0f;
   }
-  
+
   .remove {
     display: flex;
     flex-direction: row;

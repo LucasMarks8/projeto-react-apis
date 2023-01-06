@@ -10,7 +10,7 @@ import {
 import Titulo from "../../assets/images/titulo.png";
 import { Button, ChakraProvider } from "@chakra-ui/react";
 import Seta from "../../assets/icons/seta.svg";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../../contexts/GlobalContext";
 
 const Header = (props) => {
@@ -18,49 +18,33 @@ const Header = (props) => {
   const location = useLocation();
   const { pokemons, setPokemons, pokedex, setPokedex, pokeData } =
     useContext(GlobalContext);
-  console.log(pokedex);
-  console.log(pokeData);
-  // const poke = JSON.parse(localStorage.getItem("poke"));
-  const [a, setA] = useState([])
 
-  useEffect(() => {
-    //  const poke = JSON.parse(localStorage.getItem("poke"));
-    //  if(poke) {
-    //   setA(poke)
-    //  }
-  
-  }, []);
-  console.log(a);
-
-  // const newPokemon = poke && poke.find((item)=>item.id === pokeData && pokeData[0].id)
-  // console.log(newPokemon);
-
-  const findPoke = pokedex && pokedex.find((pokemon) => pokemon.id === pokeData[0].id);
+  const findPoke =
+    pokedex && pokedex.find((pokemon) => pokemon.id === pokeData.id);
 
   const removerPokemon = () => {
     pokedex.filter((pokemon, index) => {
-      if (pokemon.id === pokeData[0].id) {
+      if (pokemon.id === pokeData.id) {
         const removePokemon = [...pokemons, pokemon];
         setPokemons(removePokemon);
         pokedex.splice(index, 1);
         pokemons.push(pokemon);
         localStorage.setItem("poke", JSON.stringify(pokemons));
         localStorage.setItem("pokedex", JSON.stringify(pokedex));
-      } 
+      }
     });
   };
-  
+
   const adicionarPokemon = () => {
     pokemons.filter((pokemon, index) => {
-      if (pokemon.id === pokeData[0].id) {
+      if (pokemon.id === pokeData.id) {
         const addPokemon = [...pokedex, pokemon];
         setPokedex(addPokemon);
-        console.log(addPokemon);
         pokemons.splice(index, 1);
-        pokedex.push(pokemon)
+        pokedex.push(pokemon);
         localStorage.setItem("poke", JSON.stringify(pokemons));
         localStorage.setItem("pokedex", JSON.stringify(pokedex));
-      } 
+      }
     });
   };
 
@@ -89,7 +73,7 @@ const Header = (props) => {
           <DivHeader>
             <DivButtonLeft>
               <img src={Seta} alt="seta icon" />
-              <p onClick={() => gotToHomePage(navigate)}>Todos Pokémons</p>
+              <p onClick={() => gotToHomePage(navigate)}>Todos os Pokémons</p>
             </DivButtonLeft>
             <DivTitle>
               <img src={Titulo} alt="Título" />
@@ -100,7 +84,7 @@ const Header = (props) => {
           <DivHeader>
             <DivButtonLeft>
               <img src={Seta} alt="seta icon" />
-              <p onClick={() => gotToHomePage(navigate)}>Todos Pokémons</p>
+              <p onClick={() => gotToHomePage(navigate)}>Todos os Pokémons</p>
             </DivButtonLeft>
             <DivTitle>
               <img src={Titulo} alt="Título" />

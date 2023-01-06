@@ -1,11 +1,10 @@
 import { ChakraProvider, Flex, Progress } from "@chakra-ui/react";
-import axios from "axios";
-import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext } from "react";
+
 import Header from "../../components/Header/Header";
 import { typeIcons, backgroundCard } from "../../constants/constants";
 import PokeBall from "../../assets/images/pokebola.png";
-import { BASE_URL } from "../../constants/url";
+
 import { GlobalContext } from "../../contexts/GlobalContext";
 import {
   ImageFront,
@@ -16,151 +15,110 @@ import {
   ImageRightSide,
   DivDetails,
   DetailsContainer,
+  StatsGrid,
 } from "./DetailsPage.Styled";
 
 const DetailsPage = () => {
-  const { pokeData, setPokeData } = useContext(GlobalContext);
-  const params = useParams();
-
-  useEffect(() => {
-    fetchDetails();
-  }, []);
-
-  const fetchDetails = () => {
-    const poke = []
-    axios
-      .get(`${BASE_URL}/pokemon/${params.name}`)
-      .then((response) => {
-        poke.push(response.data)
-        setPokeData(poke);
-        console.log(pokeData);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  };
-
-  const images = pokeData.map((pokemon, index) => {
-    return (
-      <>
-        <ImageFront key={index}>
-          <img src={pokemon.sprites?.["front_default"]} alt={pokemon.name} />
-        </ImageFront>
-        <ImageBack>
-          <img src={pokemon.sprites?.["back_default"]} alt={pokemon.name} />
-        </ImageBack>
-        <ImageRightSide key={index}>
-          <img
-            src={pokemon.sprites?.other["official-artwork"].front_default}
-            alt={pokemon.name}
-          />
-        </ImageRightSide>
-      </>
-    );
-  });
-
-  const baseStates = pokeData.map((pokemon, index) => {
-    return (
-      <ChakraProvider>
-        <StatsContainer key={index}>
-          <h1>Base Stats</h1>
-          {pokemon &&
-            pokemon.stats.map((stat) => {
-              return (
-                <div className="stats" key={stat.stat.name}>
-                  <span>
-                    <b className="tittle">
-                      {stat.stat.name.charAt(0).toUpperCase() +
-                        stat.stat.name.slice(1)}
-                    </b>{" "}
-                    <b>{stat.base_stat}</b>
-                  </span>
-                  <Progress
-                    colorScheme={"orange"}
-                    size={"sm"}
-                    value={stat.base_stat}
-                    borderRadius={"8px"}
-                  />
-                </div>
-              );
-            })}
-        </StatsContainer>
-      </ChakraProvider>
-    );
-  });
-
-  const moves = pokeData.map((pokemon, index) => {
-    return (
-      <MovesContainer key={index}>
-        <h1>Moves</h1>
-        {pokemon &&
-          pokemon.moves.map((move, index) => {
-            return index < 5 && <p key={move.move.name}>{move.move.name}</p>;
-          })}
-      </MovesContainer>
-    );
-  });
-  console.log(moves);
-
-  const card = pokeData.map((pokemon, index) => {
-    const getTypes = (pokemon) => {
-      if (pokemon.types[1]) {
-        return (
-          <>
-            <img src={typeIcons(pokemon.types[0].type.name)} alt={"pokemon"} />
-            <img src={typeIcons(pokemon.types[1].type.name)} alt={"pokemon"} />
-          </>
-        );
-      } else {
-        return (
-          <img src={typeIcons(pokemon.types[0].type.name)} alt={"pokemon"} />
-        );
-      }
-    };
-    console.log(getTypes);
-    return (
-      <CardDetails key={index}>
-        <p className="id">#{pokemon.id}</p>
-        <h1>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h1>
-        <div className="types">
-          <p>{getTypes(pokemon)}</p>
-        </div>
-      </CardDetails>
-    );
-  });
-
-  const backgroundColor = pokeData.map((pokemon) => {
-    return (
-      <Flex
-        display={"flex"}
-        w={"1389.14px"}
-        h={"663px"}
-        borderRadius={"37.8857px"}
-        bg={backgroundCard(pokemon.types[0].type.name)}
-        backgroundImage={PokeBall}
-        bgRepeat={"no-repeat"}
-        bgPosition={"610px -120px"}
-        bgSize={"65%"}
-      ></Flex>
-    );
-  });
+  const { pokeData } = useContext(GlobalContext);
 
   return (
     <ChakraProvider>
-    <Header />
-    <DetailsContainer>
+      <Header />
+      <DetailsContainer>
         <p className="detailsWord">Detalhes</p>
         <div className="card"></div>
         <DivDetails>
-          {backgroundColor}
-          <div className="container">
-            <div className="imgs">{images}</div>
-            <div>{baseStates}</div>
-            <div>{card}</div>
-            <div>{moves}</div>
-          </div>
+          <Flex
+            display={"flex"}
+            w={"1389.14px"}
+            h={"663px"}
+            borderRadius={"37.8857px"}
+            bg={backgroundCard(pokeData.types[0].type.name)}
+            backgroundImage={PokeBall}
+            bgRepeat={"no-repeat"}
+            bgPosition={"610px -120px"}
+            bgSize={"65%"}
+          ></Flex>
+
+          <>
+            <ImageFront>
+              <img
+                src={pokeData.sprites?.["front_default"]}
+                alt={pokeData.name}
+              />
+            </ImageFront>
+            <ImageBack>
+              <img
+                src={pokeData.sprites?.["back_default"]}
+                alt={pokeData.name}
+              />
+            </ImageBack>
+            <ImageRightSide>
+              <img
+                src={pokeData.sprites?.other["official-artwork"].front_default}
+                alt={pokeData.name}
+              />
+            </ImageRightSide>
+          </>
+
+          <ChakraProvider>
+            <StatsContainer>
+              <h1>Base Stats</h1>
+              {pokeData.stats.map((stat) => {
+                return (
+                  <div className="stats" key={stat.stat.name}>
+                    <StatsGrid>
+                      <b className="tittle">
+                        {stat.stat.name.charAt(0).toUpperCase() +
+                          stat.stat.name.slice(1)}
+                      </b>{" "}
+                      <b>{stat.base_stat}</b>
+                    </StatsGrid>
+                    <Progress
+                      colorScheme={stat.base_stat < 50 ? "orange" : "yellow"}
+                      size={"md"}
+                      value={stat.base_stat}
+                      borderRadius={"8px"}
+                      bg={"-moz-initial"}
+                    />
+                  </div>
+                );
+              })}
+<span className="total">
+              <b className="totalStats">
+                Total{" "}</b>
+                <b>{pokeData.stats?.reduce((acc, stat) => {
+                  return acc + stat.base_stat;
+                }, 0)}{" "}
+              </b>
+              </span>
+            </StatsContainer>
+          </ChakraProvider>
+
+          <CardDetails>
+            <p className="id">#{pokeData.id}</p>
+            <h1>
+              {pokeData.name.charAt(0).toUpperCase() + pokeData.name.slice(1)}
+            </h1>
+            <div className="types">
+              <p>
+                {pokeData.types.map((poke) => {
+                  return (
+                    <img src={typeIcons(poke.type.name)} alt={"pokemon"} />
+                  );
+                })}
+              </p>
+            </div>
+          </CardDetails>
+
+          <MovesContainer>
+            <h1>Moves</h1>
+            {pokeData.moves.map((move, index) => {
+              return index < 5 && <p key={move.move.name}>{move.move.name}</p>;
+            })}
+          </MovesContainer>
         </DivDetails>
-    </DetailsContainer>
+      </DetailsContainer>
     </ChakraProvider>
   );
 };
