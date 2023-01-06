@@ -68,7 +68,7 @@ const DetailsPage = () => {
                 return (
                   <div className="stats" key={stat.stat.name}>
                     <StatsGrid>
-                      <b className="tittle">
+                      <b className="title">
                         {stat.stat.name.charAt(0).toUpperCase() +
                           stat.stat.name.slice(1)}
                       </b>{" "}
