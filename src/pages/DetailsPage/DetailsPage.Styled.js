@@ -99,7 +99,7 @@ export const StatsContainer = styled.div`
     margin-top: 15px;
   }
 
-  .tittle {
+  .title {
     color: gray;
   }
 
