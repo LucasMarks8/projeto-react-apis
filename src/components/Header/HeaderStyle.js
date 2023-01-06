@@ -36,12 +36,6 @@ export const HeaderContainer = styled.div`
     left: 566px;
     top: 21px;
   }
-
-  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
 `;
 
 export const DivButtonLeft = styled.div`

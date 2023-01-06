@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const DetailsContainer = styled.div`
   display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 110vh;
-    align-items: center;
-    background-color: #5d5d5d;
+  flex-direction: column;
+  width: 100%;
+  min-height: 110vh;
+  align-items: center;
+  background-color: #5d5d5d;
 
-    .detailsWord {
+  .detailsWord {
     position: absolute;
     width: 220px;
     height: 72px;
@@ -23,32 +23,12 @@ export const DetailsContainer = styled.div`
   }
 `;
 
-// export const Details = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   height: 100%;
-//   align-items: center;
-//   background-color: blue;
-
-//   /* row-gap: 3.5rem;
- 
-//   width: 100%;
-//   background-color: #5d5d5d;
-//   display: flex;
-//   justify-content: center;
-//   border: 4px solid black; */
-
- 
-// `;
-
 export const DivDetails = styled.div`
   position: absolute;
   width: 1389.14px;
   height: 663px;
   border-radius: 37.8857px;
   margin-top: 6rem;
-  
 `;
 
 export const ImageFront = styled.div`
@@ -85,6 +65,13 @@ export const ImageRightSide = styled.div`
   top: -125px;
 `;
 
+export const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+  justify-items: flex-start;
+`;
+
 export const StatsContainer = styled.div`
   position: absolute;
   width: 343px;
@@ -108,12 +95,24 @@ export const StatsContainer = styled.div`
   .stats {
     display: flex;
     flex-direction: column;
-    margin-left: 1rem;
-    row-gap: 1rem;
+    margin-left: 15px;
+    margin-top: 15px;
   }
 
   .tittle {
     color: gray;
+  }
+
+  .totalStats {
+    color: gray;
+  }
+
+  .total {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+    margin-top: 15px;
+    gap: 200px;
   }
 `;
 export const CardDetails = styled.div`
